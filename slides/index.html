@@ -171,7 +171,7 @@
             </code></pre>
 
             <pre><code class="rust" data-trim>
-              fn sum_numbers(s: u32) -&gt; u32 {
+              fn sum_numbers(s: &amp;str) -&gt; u32 {
                 s.split_whitespace()
                   .map(|x| x.parse::&lt;u32&gt;().unwrap())
                   .sum()
@@ -190,7 +190,22 @@
           </section>
           <section>
             <pre><code class="rust" data-trim>
-              fn sum_numbers(s: u32) -&gt; u32 {
+              fn sum_numbers(s: &amp;str) -&gt; u32 {
+                s.split_whitespace()
+                  .map(|x| x.parse::&lt;u32&gt;().expect("number is not an integer"))
+                  .sum()
+              }
+            </code></pre>
+
+            <ul>
+              <li><code>::&lt;u32&gt;</code> - similar to generics in <code>C#</code></li>
+              <li><code>unwrap/expect</code></li>
+              <li>how many times did we specify type?</li>
+            </ul>
+          </section>
+          <section>
+            <pre><code class="rust" data-trim>
+              fn sum_numbers(s: &amp;str) -&gt; u32 {
                 s.split_whitespace()
                   .map(|x| x.parse::&lt;u32&gt;().expect("number is not an integer"))
                   .sum()
@@ -229,7 +244,7 @@
 
               - `my-template` gets moved?
               - can't read `my-template`?
-              - the template no longer refers to the <code>code/name</code> variables?
+              - the template no longer refers to the `code/name` variables?
             </textarea>
           </section>
           <section>
