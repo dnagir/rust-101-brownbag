@@ -1,0 +1,269 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Rust 101</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+          <h1>Rust Language 101</h1>
+        </section>
+        
+				<section>
+          <p>
+            <img alt="Languages Diagram" src="assets/languages-diagram-rust-zoomed.png" />
+          </p>
+          <p>Source: <a href="http://rigaux.org/language-study/diagram.html">http://rigaux.org/language-study/diagram.html</a></p>
+        </section>
+
+        <section data-markdown>
+          <textarea data-template>
+            ### Inspired by ML-type languages as well as _conventional_
+
+            - `OCaml` - objective, multi-paradigm, general purpose, static typed
+            - `Scheme` - multi-paradigm (functional, imperative, Lisp dialect)
+            - `Haskell` - general purpose _purely_ functional, strongly typed
+            - `C#` - multi-paradigm, general purpose, strongly typed, imperative, object-oriented
+          </textarea>
+        </section>
+
+        <section data-markdown>
+          <textarea data-template>
+            ### Rust is high-level, general purpose
+
+            - imperative
+            - statically typed
+            - [_object-oriented*_](https://doc.rust-lang.org/book/ch17-01-what-is-oo.html)
+            - [_functional*_](https://doc.rust-lang.org/book/ch13-00-functional-features.html)
+          </textarea>
+        </section>
+
+        <section data-markdown>
+          <textarea data-template>
+            Empowering everyone to build reliable and efficient software focusing on:
+
+            - *safety* _(via rich type system and language guarantees)_
+            - *performance/concurrency* _(no GC, no shared mutations)_
+            - *productivity* _(via good tooling)_
+          </textarea>
+        </section>
+
+				<section>
+          <h2>Code Examples</h2>
+        </section>
+
+				<section>
+          <pre><code class="cs" data-trim>
+            namespace HelloWorld {
+                class Hello {
+                    static void Main() {
+                        System.Console.WriteLine("Hello World");
+                    }
+                }
+            }
+          </code></pre>
+          <pre><code class="go" data-trim>
+            package main
+            import "fmt"
+
+            func main() {
+                fmt.Println("hello world")
+            }
+          </code></pre>
+
+          <pre><code class="javascript" data-trim>
+            console.info("Hello World");
+          </code></pre>
+
+          <pre><code class="ruby" data-trim>
+            puts "Hello World"
+          </code></pre>
+
+          <pre><code class="rust" data-trim>
+            fn main() {
+                println!("Hello World")
+            }
+          </code></pre>
+        </section>
+
+        <section>
+          <section>
+            <pre><code class="ruby" data-trim>
+              def fact(n)
+                return 1 if n == 0
+                n * fact(n-1)
+              end
+
+              puts fact(5)
+            </code></pre>
+
+            <pre><code class="rust" data-trim>
+              fn fact(n: u32) -> u32 {
+                  match n {
+                      0 => 1,
+                      i => i * fact(i-1)
+                  }
+              }
+
+              fn main() {
+                  println!("{}", fact(5))
+              }
+            </code></pre>
+          </section>
+
+          <section data-markdown>
+            <textarea data-template>
+              ## What if...
+
+              - `n` is negative?
+              - `n` is too large?
+            </textarea>
+          </section>
+
+          <section>
+            <pre><code class="rust" data-trim>
+              fn fact(n: u32) -> u32 {
+                let mut acc = 1;
+                for num in 2..=n {
+                    acc *= num;
+                }
+                acc
+              }
+
+              fn main() {
+                  println!("{}", fact(5))
+              }
+            </code></pre>
+
+            <ul>
+              <li><code>let mut</code></li>
+              <li><code>2..=n</code></li>
+            </ul>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <p>take a string, return the sum of numbers</p>
+            <pre><code class="ruby" data-trim>
+              def sum_numbers(s)
+                s.split.map(&amp;:to_i).sum
+              end
+            </code></pre>
+
+            <pre><code class="rust" data-trim>
+              fn sum_numbers(s: u32) -&gt; u32 {
+                s.split_whitespace()
+                  .map(|x| x.parse::&lt;u32&gt;().unwrap())
+                  .sum()
+              }
+            </code></pre>
+          </section>
+
+          <section data-markdown>
+            <textarea data-template>
+              ## What if...
+
+              - `s` is null?
+              - numbers are not integers?
+              - numbers are too big?
+            </textarea>
+          </section>
+          <section>
+            <pre><code class="rust" data-trim>
+              fn sum_numbers(s: u32) -&gt; u32 {
+                s.split_whitespace()
+                  .map(|x| x.parse::&lt;u32&gt;().expect("number is not an integer"))
+                  .sum()
+              }
+            </code></pre>
+
+            <ul>
+              <li><code>::&lt;u32&gt;</code> - similar to generics in <code>C#</code></li>
+              <li><code>unwrap/expect</code></li>
+              <li>how many times did we specify type?</li>
+            </ul>
+          </section>
+        </section>
+
+
+        <section>
+          <section>
+            <p>given the two variables, generate a template</p>
+            <pre><code class="ruby" data-trim>
+              code = 'my-code'
+              name = 'my-name'
+              ERB.new(File.read('my-template')).result(binding)
+            </code></pre>
+
+            <pre><code class="rust" data-trim>
+              format!(
+                  include_str!("my-template"),
+                  code = "my-code",
+                  name = "my-name"
+              )
+            </code></pre>
+          </section>
+          <section data-markdown>
+            <textarea data-template>
+              ## What if...
+
+              - `my-template` gets moved?
+              - can't read `my-template`?
+              - the template no longer refers to the <code>code/name</code> variables?
+            </textarea>
+          </section>
+          <section>
+            <p>this is how printing works</p>
+            <pre><code class="rust" data-trim>
+              println!("{}", 123); // ✅
+              println!("Key={k}, Value={v}", k = "k", v = 99); // ✅
+
+              println!("Key={}, Value={}", 42);
+              // error: 2 positional arguments in format string,
+              //        but there is 1 argument
+            </code></pre>
+          </section>
+        </section>
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+        margin: 0,
+        padding: 0,
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>
