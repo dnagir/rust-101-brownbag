@@ -204,19 +204,21 @@
             </ul>
           </section>
           <section>
+            <p>maybe ignore non-integer numbers?</p>
             <pre><code class="rust" data-trim>
               fn sum_numbers(s: &amp;str) -&gt; u32 {
                 s.split_whitespace()
-                  .map(|x| x.parse::&lt;u32&gt;().expect("number is not an integer"))
+                  .map(|x| parse_number(x))
                   .sum()
               }
-            </code></pre>
 
-            <ul>
-              <li><code>::&lt;u32&gt;</code> - similar to generics in <code>C#</code></li>
-              <li><code>unwrap/expect</code></li>
-              <li>how many times did we specify type?</li>
-            </ul>
+              fn parse_number(x: &amp;str) -&gt; u32 {
+                  match x.parse() {
+                      Ok(number) =&gt; number,
+                      Err(_details) =&gt; 0 // ignore non-int numbers
+                  }
+              }
+            </code></pre>
           </section>
         </section>
 
