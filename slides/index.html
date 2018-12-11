@@ -587,8 +587,69 @@
         </section>
 
         <section>
-          <a href="https://doc.rust-lang.org/book/ch11-03-test-organization.html#testing-private-functions">TODO: Testing (private funcs)</a>
-          <p>Frind assemblies in CSharp?</p>
+          <section data-markdown>
+            <textarea data-template>
+              ## Testing
+
+              - Built-in tooling
+              - Unit Tests
+              - Integration Tests
+              - Parallel execution
+            </textarea>
+          </section>
+
+          <section data-markdown>
+            <textarea data-template>
+              comes with minimal testing framework
+
+              other options are:
+              - RSpec-like
+              - QuickCheck-like (property based, input generation)
+              - Parallel execution
+            </textarea>
+          </section>
+
+          <section data-markdown>
+            <textarea data-template>
+              - in the same file as implementation
+              - as such can test private functions easy (similar to Friend-assemblies in `C#`)
+
+              ```rust
+              fn internal_adder(a: i32, b: i32) -> i32 {
+                  a + b
+              }
+
+              #[cfg(test)]
+              mod tests {
+                  use super::*;
+
+                  #[test]
+                  fn internal() {
+                      assert_eq!(4, internal_adder(2, 2));
+                  }
+              }
+              ```
+            </textarea>
+          </section>
+
+          <section data-markdown>
+            <textarea data-template>
+              ## Integration tests
+
+              - in separate director
+              - can only interact via the provided interfaces
+
+              ```rust
+              // tests/integration_test.rs
+              use adder;
+
+              #[test]
+              fn it_adds_two() {
+                  assert_eq!(4, adder::add_two(2));
+              }
+              ```
+            </textarea>
+          </section>
         </section>
 
         <section>
