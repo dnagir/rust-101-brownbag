@@ -744,11 +744,132 @@
         </section>
 
         <section>
-          <a href="https://doc.rust-lang.org/book/ch16-01-threads.html">TODO: Concurrency</a>
-        </section>
+          <section data-markdown>
+            <textarea data-template>
+              ## Concurrency
 
-        <section>
-          <a href="https://doc.rust-lang.org/book/ch16-02-message-passing.html">TODO: Channels - similar to Go</a>
+              &gt; Root of all evil is **shared and mutable** state
+
+            </textarea>
+          </section>
+
+          <section data-markdown>
+            <textarea data-template>
+              - eliminate mutations (functional approach)
+              - eliminate sharing (not a very useful program)
+
+              &gt; Rust allows one or the other, but not both.
+
+            </textarea>
+          </section>
+
+          <section data-markdown>
+            <textarea data-template>
+              ## Ownership model
+
+              - every value has one owner
+              - when owner goes out of scope - value is dropped
+
+              [Dive more here](https://doc.rust-lang.org/book/ch04-00-understanding-ownership.html)
+            </textarea>
+          </section>
+
+          <section data-markdown>
+            <textarea data-template>
+              Borrowing TLDR
+
+              ```rust
+              // fn owns s from now on (value is dropped)
+              fn own_this_string(s: String)
+
+              // fn will use s and return back (read-only)
+              fn borrow(s: &amp;String)
+
+              // fn can change s and will return back
+              fn borrow_to_change(s: &amp;mut String)
+              ```
+            </textarea>
+          </section>
+
+          <section data-markdown>
+            <textarea data-template>
+              only one mutable (`&amp; mut`) reference for the same value can exist
+
+              ```rust
+              let mut s = String::from("hello");
+
+              let r1 = &amp;mut s;
+              let r2 = &amp;mut s;
+
+              println!("{}, {}", r1, r2);
+              ```
+
+              ```
+              error[E0499]: cannot borrow `s` as mutable more than once at a time
+                --&gt; src/main.rs:86:14
+                 |
+              85 |     let r1 = &amp;mut s;
+                 |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;------ first mutable borrow occurs here
+              ```
+            </textarea>
+          </section>
+
+          <section data-markdown>
+            <textarea data-template>
+              ## Channels
+
+              - like Go channels
+              - but guarantees no shared mutations
+              - but guarantees no shared mutations
+            </textarea>
+          </section>
+
+          <section data-markdown>
+            <textarea data-template>
+              ```rust
+              let (tx, rx) = mpsc::channel();
+
+              do_work(2, Sender::clone(&amp;tx));
+              do_work(3, Sender::clone(&amp;tx));
+              do_work(4, Sender::clone(&amp;tx));
+              do_work(1, tx);
+
+              for received in rx {
+                  println!("got: {}", received);
+              }
+              ```
+            </textarea>
+          </section>
+
+          <section data-markdown>
+            <textarea data-template>
+              ```rust
+              fn do_work(number: i32, tx: Sender&lt;String&gt;) {
+                  thread::spawn(move || {
+                      let val = String::from("hi");
+                      tx.send(val).unwrap(); // cannot touch val anymore - owner changed
+                      tx.send(format!("from {}", number)).unwrap();
+                  });
+              }
+              ```
+            </textarea>
+          </section>
+
+          <section data-markdown>
+            <textarea data-template>
+              strong type system and safety guarantees allow building tools like [parallel iterators](https://github.com/rayon-rs/rayon)
+
+              ```rust
+              fn sum_of_squares(input: &amp;[i32]) -&gt; i32 {
+                  input.iter().map(|i| i * i).sum()
+              }
+
+              fn sum_of_squares_parallel(input: &amp;[i32]) -&gt; i32 {
+                  input.par_iter().map(|i| i * i).sum()
+              }
+              ```
+            </textarea>
+          </section>
         </section>
 
         <section data-markdown>
