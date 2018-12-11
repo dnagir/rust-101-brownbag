@@ -381,7 +381,101 @@
         </section>
 
         <section>
-          <a href="https://doc.rust-lang.org/book/ch06-01-defining-an-enum.html">TODO: Enums - Residential vs POBox</a>
+          <section data-markdown>
+            <textarea data-template>
+              ## Modeling _similar but different_
+
+
+              ```ruby
+              class Address < Struct.new(
+                                         :unit_number,
+                                         :street_number,
+                                         :street_name,
+                                         :state,
+                                         :postcode,
+                                         :country)
+              end
+              ```
+            </textarea>
+          </section>
+
+          <section data-markdown>
+            <textarea data-template>
+              ## How about PO Box?
+
+              - add `po_box_number` and ignore/other attributes
+              - create hierarchy to share some common fields
+              - nested object + delegation
+              - metaprogramming
+              - how would we know which parts of the app are affected?
+
+              ```ruby
+              class ResidentialAddress &lt; Struct.new(:unit_number, :street_number, :street_name, ...)
+              end
+
+              class POBoxAddress &lt; Struct.new(:po_box_number, ...)
+              end
+              ```
+            </textarea>
+          </section>
+
+          <section data-markdown>
+            <textarea data-template>
+              define separate structures
+
+              ```rust
+              struct Residential {
+                  unit_number: String,
+                  street_number: String,
+                  street_name: String,
+                  state: String,
+                  postcode: String,
+                  country: String,
+              }
+              struct POBox {
+                  box_number: String,
+                  state: String,
+                  postcode: String,
+                  country: String,
+              }
+              ```
+            </textarea>
+          </section>
+
+          <section data-markdown>
+            <textarea data-template>
+              and make an Address _one of_ those
+
+              ```rust
+              enum Address {
+                  Residential(Residential),
+                  POBox(POBox),
+              }
+
+              fn receiver_address() -&gt; Address {
+                Address::POBox(POBox {
+                    box_number: "4242".to_string(),
+                    state: "VIC".to_string(),
+                    postcode: "3000".to_string(),
+                    country: "AU".to_string(),
+                });
+              }
+              ```
+            </textarea>
+          </section>
+
+          <section data-markdown>
+            <textarea data-template>
+              ## Combining with `Option` provides
+              
+              - strong guarantees
+              - more flexible domain modeling options
+
+              ```rust
+              fn receiver_address() -&gt; Option&lt;Address&gt;
+              ```
+            </textarea>
+          </section>
         </section>
 
         <section>
