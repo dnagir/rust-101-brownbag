@@ -159,6 +159,20 @@
               <li><code>2..=n</code></li>
             </ul>
           </section>
+
+          <section>
+            <pre><code class="ruby" data-trim>
+              def fact(n)
+                  (2..n).inject(1) { |acc, num| acc * num }
+              end
+            </code></pre>
+
+            <pre><code class="rust" data-trim>
+              fn fact(n: u32) -&gt; u32 {
+                  (2..=n).fold(1, |acc, num| acc * num)
+              }
+            </code></pre>
+          </section>
         </section>
 
         <section>
@@ -263,7 +277,107 @@
         </section>
 
         <section>
-          <code>TODO: Result and Option</code>
+          <section data-markdown>
+            <textarea data-template>
+              ## Handling Errors
+
+              ```rust
+              fn main() {
+                  match std::fs::read_to_string("main.rs") {
+                      Ok(content) => println!("{}", content),
+                      Err(e) => panic!("Could not open the file: {}", e)
+                  }
+              }
+              ```
+            </textarea>
+          </section>
+
+          <section data-markdown>
+            <textarea data-template>
+              ```rust
+              fn main() {
+                  println!("{}", std::fs::read_to_string("main.rs").unwrap());
+                  println!("{}", std::fs::read_to_string("main.rs").expect("cannot open the file"));
+              }
+              ```
+            </textarea>
+          </section>
+
+          <section data-markdown>
+            <textarea data-template>
+              # Billion Dollar Mistake
+
+              ```ruby
+              def user_by_email(email)
+                email == 'me@example.com' ? User.new(email) : nil
+              end
+              ```
+
+              &gt; C# 8 supports nullable references and is one of the nicest solutions that preserves backwards compatibility
+            </textarea>
+          </section>
+
+          <section data-markdown>
+            <textarea data-template>
+              There is no `nil` in Rust, so what do you do?
+
+              Always return something:
+
+              ```rust
+              fn user_by_email(email: String) -&gt; User {
+                  User { email: email }
+              }
+              ```
+            </textarea>
+          </section>
+
+          <section data-markdown>
+            <textarea data-template>
+              Or express the `Option`-ality:
+
+              ```rust
+              fn user_by_email(email: String) -&gt; Option&lt;User&gt; {
+                  if email == "me@example.com" {
+                      Some(User { email: email })
+                  } else {
+                      None
+                  }
+              }
+              ```
+            </textarea>
+          </section>
+
+          <section data-markdown>
+            <textarea data-template>
+              Use `Option` similarly to `Result`:
+
+              ```rust
+              match user_by_email(email) {
+                  Some(user) =&gt; println!("User found {}", user.email),
+                  None =&gt; println!("No user found"),
+              }
+              ```
+              or simply:
+
+              ```rust
+              user = user_by_email(email).expect("no user found")
+              user = user_by_email(email).unwrap()
+              ```
+            </textarea>
+          </section>
+          <section data-markdown>
+            <textarea data-template>
+              - `Option` is a value that can be absent
+              - `Result` is a value that may be absent due to an error
+
+              ```rust
+              match a_result {
+                Ok(value) -&gt; Some(value),
+                Err(_details) -&gt; None
+              }
+              ```
+            </textarea>
+          </section>
         </section>
 
         <section>
@@ -299,6 +413,7 @@
             - More verbose than others
             - Borrow checker annoyances
             - No "type it out"
+            - `"foo".to_string()`
             - Hireability
           </textarea>
         </section>
@@ -317,7 +432,7 @@
         </section>
 
         <section>
-          <h2>TODO: Tooling (cargo build/test/package)</h2>
+          <h2>TODO: Tooling (cargo build/test/package/docs/rustfmt)</h2>
         </section>
 
         <section>
