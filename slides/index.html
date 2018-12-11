@@ -594,6 +594,7 @@
               - Built-in tooling
               - Unit Tests
               - Integration Tests
+              - Documentatoion Tests
               - Parallel execution
             </textarea>
           </section>
@@ -650,6 +651,96 @@
               ```
             </textarea>
           </section>
+
+          <section data-markdown>
+            <textarea data-template>
+              ## Documentation Tests
+
+              ````rust
+              /// Add two to a number
+              /// # Examples
+              ///
+              /// ```
+              /// assert_eq!(add_two(4), 6)
+              /// ```
+              pub fn add_two(a: i32) -> i32 {
+                  a + 2
+              }
+              ````
+            </textarea>
+          </section>
+        </section>
+
+        <section>
+          <section data-markdown>
+            <textarea data-template>
+              ## Tooling
+
+              All you need to know is
+
+              ```bash
+              cargo --help
+              rustup --help
+              ```
+            </textarea>
+          </section>
+
+          <section data-markdown>
+            <textarea data-template>
+              ## Build &amp; Test
+
+              ```bash
+              cargo build # debug mode
+              cargo build --release # production, highly optimised
+              cargo test
+              ```
+
+              all the right dependencies will be correctly compiled
+            </textarea>
+          </section>
+
+          <section data-markdown>
+            <textarea data-template>
+              ## Update dependencies
+
+              - like `Ruby` `bundler`; similar to `C#` `nuget`, `JavaScript`'s `npm`/`yarn`
+              - unlike `Go` or `Python` (manual dependency management or additional tools)
+
+
+              ```bash
+              cargo update
+              ```
+
+            </textarea>
+          </section>
+
+          <section data-markdown>
+            <textarea data-template>
+              ## Project documentation
+
+              - document of the whole project
+              - documentation of all the dependencies
+              - doc-tests (useful examples)
+              - no unrelated documentation is generated
+
+              ```bash
+              cargo doc --open
+              ```
+            </textarea>
+          </section>
+
+          <section>
+            <img class="stretch" alt="Example document" src="assets/cargo-doc-open.png" />
+          </section>
+
+          <section data-markdown>
+            <textarea data-template>
+              ## `rustfmt`
+
+              - like `Gofmt`, `ElmFormat`
+              - somewhat like `Ruby`'s `rubocop`
+            </textarea>
+          </section>
         </section>
 
         <section>
@@ -684,10 +775,6 @@
             - Great community
             - Runs on AWS lambda 😉
           </textarea>
-        </section>
-
-        <section>
-          <h2>TODO: Tooling (cargo build/test/package/docs/rustfmt)</h2>
         </section>
 
         <section>
