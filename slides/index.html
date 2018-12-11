@@ -117,10 +117,10 @@
             </code></pre>
 
             <pre><code class="rust" data-trim>
-              fn fact(n: u32) -> u32 {
+              fn fact(n: u32) -&gt; u32 {
                   match n {
-                      0 => 1,
-                      i => i * fact(i-1)
+                      0 =&gt; 1,
+                      i =&gt; i * fact(i-1)
                   }
               }
 
@@ -141,7 +141,7 @@
 
           <section>
             <pre><code class="rust" data-trim>
-              fn fact(n: u32) -> u32 {
+              fn fact(n: u32) -&gt; u32 {
                 let mut acc = 1;
                 for num in 2..=n {
                     acc *= num;
@@ -284,8 +284,8 @@
               ```rust
               fn main() {
                   match std::fs::read_to_string("main.rs") {
-                      Ok(content) => println!("{}", content),
-                      Err(e) => panic!("Could not open the file: {}", e)
+                      Ok(content) =&gt; println!("{}", content),
+                      Err(e) =&gt; panic!("Could not open the file: {}", e)
                   }
               }
               ```
