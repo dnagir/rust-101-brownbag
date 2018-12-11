@@ -43,6 +43,7 @@
             - `Scheme` - multi-paradigm (functional, imperative, Lisp dialect)
             - `Haskell` - general purpose _purely_ functional, strongly typed
             - `C#` - multi-paradigm, general purpose, strongly typed, imperative, object-oriented
+            - `C++` - general purpose, object-oriented, low level
           </textarea>
         </section>
 
@@ -461,6 +462,8 @@
                 });
               }
               ```
+
+              _similar to Union Types in `Elm`_
             </textarea>
           </section>
 
@@ -613,7 +616,7 @@
           <section data-markdown>
             <textarea data-template>
               - in the same file as implementation
-              - as such can test private functions easy (similar to Friend-assemblies in `C#`)
+              - as such can test private functions easily (similar to Friend-assemblies in `C#`)
 
               ```rust
               fn internal_adder(a: i32, b: i32) -> i32 {
@@ -691,8 +694,8 @@
 
               ```bash
               cargo build # debug mode
-              cargo build --release # production, highly optimised
               cargo test
+              cargo build --release # production, highly optimised
               ```
 
               all the right dependencies will be correctly compiled
@@ -718,8 +721,7 @@
             <textarea data-template>
               ## Project documentation
 
-              - document of the whole project
-              - documentation of all the dependencies
+              - documentation for the whole project (incl dependencies)
               - doc-tests (useful examples)
               - no unrelated documentation is generated
 
@@ -820,7 +822,7 @@
 
               - like Go channels
               - but guarantees no shared mutations
-              - but guarantees no shared mutations
+              - easier to ensure properly closed channels
             </textarea>
           </section>
 
@@ -874,54 +876,97 @@
 
         <section data-markdown>
           <textarea data-template>
-            ## My Dislikes
+            ## My Dislikes ☹️
 
             - Syntax isn't "beautiful"
-            - More verbose than others
-            - Borrow checker annoyances
+            - Often more verbose than other languages
             - No "type it out"
-            - `"foo".to_string()`
+            - Borrow checker annoyances
+            - `String::from("hi")` vs `"hi"`
             - Hireability
           </textarea>
         </section>
 
         <section data-markdown>
           <textarea data-template>
-            ## My Likes
+            ## My Likes 😁
 
             - Sufficiently different to learn
+            - Low level and High level
             - Multiparadigm
             - Solid type system
             - Helps sleeping better
+            - Confidence inspiring
             - Great community
-            - Runs on AWS lambda 😉
+            - Self contained executable
+            - Runs natively on AWS Lambda 😉
           </textarea>
-        </section>
-
-        <section>
-          <h2>TODO: State of language and how it evolves (nightly-alpha-beta-stable + editions + backporting)</h2>
-        </section>
-
-        <section>
-          <h2>TODO: Who's using</h2>
-        </section>
-
-        <section>
-          <h2>TODO: Most loved language 2016-2018</h2>
-        </section>
-
-        <section>
-          <h2>TODO: Not perfect, but worth learning</h2>
         </section>
 
         <section data-markdown>
           <textarea data-template>
-            ## Next
+            ## Interesting facts
 
-            - Playground
-            - Rust Book
-            - IRC / forums
+            - was written in `OCaml`
+            - then in `Rust` (`Rust` compiles `Rust`)
+            - follows `nightly -&gt; alpha -&gt; beta &gt; stable` schedule
+            - backports new features to the older editions of the language
+            - closest similar languages: `D`, `Go`, `Nim`, `C++`, `C#`, `Haskell`
           </textarea>
+        </section>
+
+        <section data-markdown>
+          <textarea data-template>
+            ## [Notable companies using Rust](https://www.rust-lang.org/production/users)
+
+            - Mozilla (Firefox, Servo)
+            - AWS Firecracker
+            - Dropbox
+            - Chef
+            - Cloudflare
+            - Deliveroo
+            - CoreOS
+            - Xero
+            - Atlassian
+            - Microsoft
+          </textarea>
+        </section>
+
+        <section data-markdown>
+          <textarea data-template>
+            ## Good use-cases
+
+            Performance and mission critical applications
+
+            - infrastructure
+            - number crunching / data analysis
+            - integrating with other platforms languages (Ruby, Python etc)
+            - payment processing
+            - low error tolerance
+            - fast changing applications
+          </textarea>
+        </section>
+
+        <section>
+          <h2>Most Loved 3 years in a row</h2>
+          <img class="stretch" alt="SO 2018 Most Loved" src="assets/so-2018-most-loved.png" />
+        </section>
+
+        <section data-markdown>
+          <textarea data-template>
+            ## Try it
+
+            1. Make sure to start with [Rust Book](https://doc.rust-lang.org/cargo/index.html)
+            2. [Playground](https://play.rust-lang.org)
+            3. IRC / [forums](https://users.rust-lang.org/)
+            4. `curl https://sh.rustup.rs -sSf | sh`
+            5. `cargo new yeah`
+          </textarea>
+        </section>
+
+        <section>
+          <h1>Thank you</h1>
+          <a href="https://www.linkedin.com/in/dmitriynagirnyak/">@dnagir</a>
         </section>
 			</div>
 		</div>
