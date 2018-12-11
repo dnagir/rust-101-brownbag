@@ -476,14 +476,114 @@
               ```
             </textarea>
           </section>
+
+          <section data-markdown>
+            <textarea data-template>
+              ## Pattern Matching
+
+              - fancy `if .. then ... else`
+              - will not compile if options are missing (new type of address)
+
+              ```rust
+              match receiver_address().expect("no address") {
+                  Address::Residential(residential) =&gt; {
+                      println!("street numnber {}", residential.street_number)
+                  }
+                  Address::POBox(po) =&gt; println!("POBox {}", po.box_number),
+              };
+              ```
+            </textarea>
+          </section>
         </section>
 
         <section>
-          <code>TODO: Pattern Matching</code>
-        </section>
+          <section data-markdown>
+            <textarea data-template>
+              ## Polimorphism and `trait`-s
 
-        <section>
-          <a href="https://doc.rust-lang.org/book/ch10-02-traits.html">TODO: Traits - maybe mention derrive Show/Debug</a>
+              via _generics_ rather than _inheritance_
+
+              - somewhat like `Go` (via interfaces)
+              - but really more like `C#` (true generics)
+              - less like `Ruby`
+              - unlike classical `JavaScript` (prototypical inheritance)
+            </textarea>
+          </section>
+
+          <section data-markdown>
+            <textarea data-template>
+              format the address
+
+              ```rust
+              trait Formattable {
+                  fn format(&amp;self) -&gt; String;
+              }
+
+              impl Formattable for POBox {
+                  fn format(&amp;self) -&gt; String {
+                      format!("PO Box {}", self.box_number)
+                  }
+              }
+              impl Formattable for Residential {
+                  fn format(&amp;self) -&gt; String {
+                      format!("Street {}", self.street_number)
+                  }
+              }
+
+
+              fn print&lt;T: Formattable&gt;(formattable: T) {
+                  println!("Address {}", formattable.format())
+              }
+              ```
+            </textarea>
+          </section>
+
+          <section data-markdown>
+            <textarea data-template>
+              and use it
+
+              ```rust
+              fn print&lt;T: Formattable&gt;(formattable: T) {
+                  println!("Address {}", formattable.format())
+              }
+              ```
+
+              &gt; this can be much more abstracted
+              &gt; (there's nothing address related)
+            </textarea>
+          </section>
+
+          <section data-markdown>
+            <textarea data-template>
+              ## trait is like an interface
+
+              but
+
+              - can be implemented on _existing_ types* (similar to C# extension methods)
+              - can have _default implementation_
+              - can be statically dispatched (abstraction with no overhead)
+              - more flexible operator overloading
+              - no Higher-Kinded-Types though
+
+            </textarea>
+          </section>
+
+          <section data-markdown>
+            <textarea data-template>
+              traits can be _derived_ (auto implemented, code-gen):
+
+              ```rust
+              #[derive(Debug, Clone, PartialEq, Hash)]
+              struct POBox {
+                  box_number: String,
+                  state: String,
+                  postcode: String,
+                  country: String,
+              }
+              ```
+
+            </textarea>
+          </section>
         </section>
 
         <section>
