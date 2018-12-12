@@ -474,10 +474,10 @@
 
               fn receiver_address() -&gt; Address {
                 Address::PoBox(PoBox {
-                    box_number: "4242".to_string(),
-                    state: "VIC".to_string(),
-                    postcode: "3000".to_string(),
-                    country: "AU".to_string(),
+                    box_number: "4242".to_owned(),
+                    state: "VIC".to_owned(),
+                    postcode: "3000".to_owned(),
+                    country: "AU".to_owned(),
                 });
               }
               ```
@@ -916,7 +916,7 @@
             - Often more verbose than other languages
             - No "type it out"
             - Borrow checker annoyances
-            - `String::from("hi")` vs `"hi"`
+            - `"hi".to_owned()` vs `"hi"`
             - Hireability
           </textarea>
         </section>
