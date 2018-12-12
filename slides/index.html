@@ -433,7 +433,7 @@
                   postcode: String,
                   country: String,
               }
-              struct POBox {
+              struct PoBox {
                   box_number: String,
                   state: String,
                   postcode: String,
@@ -450,11 +450,11 @@
               ```rust
               enum Address {
                   Residential(Residential),
-                  POBox(POBox),
+                  PoBox(PoBox),
               }
 
               fn receiver_address() -&gt; Address {
-                Address::POBox(POBox {
+                Address::PoBox(PoBox {
                     box_number: "4242".to_string(),
                     state: "VIC".to_string(),
                     postcode: "3000".to_string(),
@@ -492,7 +492,7 @@
                   Address::Residential(residential) =&gt; {
                       println!("street numnber {}", residential.street_number)
                   }
-                  Address::POBox(po) =&gt; println!("POBox {}", po.box_number),
+                  Address::PoBox(po) =&gt; println!("POBox {}", po.box_number),
               };
               ```
             </textarea>
@@ -522,7 +522,7 @@
                   fn format(&amp;self) -&gt; String;
               }
 
-              impl Formattable for POBox {
+              impl Formattable for PoBox {
                   fn format(&amp;self) -&gt; String {
                       format!("PO Box {}", self.box_number)
                   }
@@ -577,7 +577,7 @@
 
               ```rust
               #[derive(Debug, Clone, PartialEq, Hash)]
-              struct POBox {
+              struct PoBox {
                   box_number: String,
                   state: String,
                   postcode: String,
