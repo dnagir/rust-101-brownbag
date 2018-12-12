@@ -366,15 +366,34 @@
               ```
             </textarea>
           </section>
+
           <section data-markdown>
             <textarea data-template>
               - `Option` is a value that can be absent
-              - `Result` is a value that may be absent due to an error
+              - `Result` is a value that can be absent due to an error
 
               ```rust
               match a_result {
                 Ok(value) -&gt; Some(value),
                 Err(_details) -&gt; None
+              }
+
+              // or simply
+              a_result.ok()
+              ```
+            </textarea>
+          </section>
+
+          <section data-markdown>
+            <textarea data-template>
+              ## `unwrap/expect` is not idiomatic Rust
+
+              ```rust
+              use std::*;
+
+              fn main() -&gt; Result<(), io::Error> {
+                  println!("{}", fs::read_to_string("main.rs")?);
+                  Ok(())
               }
               ```
             </textarea>
