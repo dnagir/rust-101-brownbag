@@ -865,9 +865,9 @@
               ```rust
               let (tx, rx) = mpsc::channel();
 
-              do_work(2, Sender::clone(&amp;tx));
-              do_work(3, Sender::clone(&amp;tx));
-              do_work(4, Sender::clone(&amp;tx));
+              do_work(2, tx.clone());
+              do_work(3, tx.clone());
+              do_work(4, tx.clone());
               do_work(1, tx);
 
               for received in rx {
