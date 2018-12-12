@@ -584,7 +584,22 @@
                   country: String,
               }
               ```
+            </textarea>
+          </section>
 
+          <section data-markdown>
+            <textarea data-template>
+              this can be especially useful for [serialisation](https://github.com/serde-rs/serde) in web apps
+
+              ```rust
+              #[derive(Serialize)]
+              struct ProfileResponse {
+                  nick: String,
+                  full_name: String,
+                  role: Role,
+                  image: ProfileImage,
+              }
+              ```
             </textarea>
           </section>
         </section>
